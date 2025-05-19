@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SearchIcon, FilterIcon, PlusIcon, HeartIcon } from "@/lib/icons";
+import { SearchIcon, FilterIcon, PlusIcon } from "@/lib/icons";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Helmet } from "react-helmet";
@@ -232,7 +232,7 @@ export default function OracionesPage() {
                   </CardContent>
                   <CardFooter className="flex justify-between border-t pt-4">
                     <div className="flex items-center text-neutral-500 text-sm">
-                      <HeartIcon className="h-4 w-4 mr-1 text-secondary" />
+                      <i className="ri-heart-line mr-1 text-secondary"></i>
                       <span>{peticion.contadorOraciones} oraciones</span>
                     </div>
                     <div className="flex space-x-2">
