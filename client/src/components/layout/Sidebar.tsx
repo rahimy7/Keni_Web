@@ -4,9 +4,9 @@ export default function Sidebar() {
   const [location, setLocation] = useLocation();
 
   const adminUser = {
-    name: "Pastor David",
+    name: "Pastor Keni",
     role: "Administrador",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100"
+    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpwm93fwjovHMblv_ofyirT2Cm5zJQHMeT6Q&s"
   };
 
   // Determines if a nav item is active

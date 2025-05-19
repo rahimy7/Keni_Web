@@ -2,18 +2,18 @@ import { useEffect, useRef } from "react";
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const data = [
-  { name: 'Ene', ventas: 1000 },
-  { name: 'Feb', ventas: 1200 },
-  { name: 'Mar', ventas: 800 },
-  { name: 'Abr', ventas: 1500 },
-  { name: 'May', ventas: 1800 },
-  { name: 'Jun', ventas: 1200 },
-  { name: 'Jul', ventas: 2000 },
-  { name: 'Ago', ventas: 2200 },
-  { name: 'Sep', ventas: 1800 },
-  { name: 'Oct', ventas: 2400 },
-  { name: 'Nov', ventas: 2600 },
-  { name: 'Dic', ventas: 3000 },
+  { name: 'Ene', Conexiones: 1000 },
+  { name: 'Feb', Conexiones: 1200 },
+  { name: 'Mar', Conexiones: 800 },
+  { name: 'Abr', Conexiones: 1500 },
+  { name: 'May', Conexiones: 1800 },
+  { name: 'Jun', Conexiones: 1200 },
+  { name: 'Jul', Conexiones: 2000 },
+  { name: 'Ago', Conexiones: 2200 },
+  { name: 'Sep', Conexiones: 1800 },
+  { name: 'Oct', Conexiones: 2400 },
+  { name: 'Nov', Conexiones: 2600 },
+  { name: 'Dic', Conexiones: 3000 },
 ];
 
 export default function BarChart() {
@@ -32,7 +32,7 @@ export default function BarChart() {
         <XAxis dataKey="name" axisLine={false} tickLine={false} />
         <YAxis axisLine={false} tickLine={false} />
         <Tooltip />
-        <Bar dataKey="ventas" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="Conexiones" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
       </RechartsBarChart>
     </ResponsiveContainer>
   );

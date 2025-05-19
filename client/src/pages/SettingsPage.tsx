@@ -42,8 +42,8 @@ export default function SettingsPage() {
   const profileForm = useForm<z.infer<typeof profileFormSchema>>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      name: "Juan Pérez",
-      email: "juan.perez@ejemplo.com",
+      name: "Keni Lara",
+      email: "k.lara@ejemplo.com",
       bio: "Administrador de la aplicación MiApp",
     },
   });
@@ -116,7 +116,7 @@ export default function SettingsPage() {
                     <div className="flex flex-col items-center">
                       <div className="w-32 h-32 rounded-full bg-neutral-200 mb-4 overflow-hidden">
                         <img 
-                          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpwm93fwjovHMblv_ofyirT2Cm5zJQHMeT6Q&s" 
                           alt="Admin User" 
                           className="w-full h-full object-cover" 
                         />

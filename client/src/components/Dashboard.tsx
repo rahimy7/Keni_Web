@@ -54,7 +54,7 @@ export default function Dashboard() {
       {/* Welcome Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-neutral-800">¡Bienvenido, Juan!</h1>
+          <h1 className="text-2xl font-bold text-neutral-800">¡Bienvenido, Pr. Keni!</h1>
           <p className="text-neutral-500">Panel de administración - {formatDate()}</p>
         </div>
         <div className="mt-4 md:mt-0 flex space-x-2">
@@ -106,7 +106,7 @@ export default function Dashboard() {
         {/* Sales Chart */}
         <div className="bg-white rounded-xl shadow-sm p-5">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-neutral-800">Ventas Mensuales</h3>
+            <h3 className="font-semibold text-neutral-800">Interacciones Mensuales</h3>
             <div className="flex items-center space-x-2">
               <button className="text-neutral-400 hover:text-neutral-700">
                 <RefreshIcon className="h-4 w-4" />
