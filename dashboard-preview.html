@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Vista Previa</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #4b91ff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .screenshot {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .feature-card h3 {
+            margin-top: 0;
+            color: #4b91ff;
+        }
+        .dashboard-mockup {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            background-color: white;
+        }
+        .dashboard-header {
+            background-color: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: #4b91ff;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .dashboard-content {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .sidebar {
+            width: 240px;
+            background-color: white;
+            padding: 20px;
+            border-right: 1px solid #eee;
+        }
+        .sidebar-item {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        .sidebar-item.active {
+            background-color: rgba(75, 145, 255, 0.1);
+            color: #4b91ff;
+            font-weight: 500;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .chart-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            height: 300px;
+        }
+        .activity-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Panel de Administración Web</h1>
+            <p>Basado en la aplicación móvil - Vista previa</p>
+        </header>
+
+        <div class="section">
+            <h2>Descripción General</h2>
+            <p>Este panel de administración web incluye todas las características de la aplicación móvil original, adaptadas a una interfaz web completa y responsiva:</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Dashboard</h3>
+                    <p>Panel principal con estadísticas, gráficos de ventas y usuarios, productos más vendidos y actividad reciente.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Gestión de Usuarios</h3>
+                    <p>Administración completa de usuarios con búsqueda, filtros y opciones de visualización.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Sistema de Pedidos</h3>
+                    <p>Visualización y gestión de todos los pedidos con filtrado por estado (Entregados, En Proceso, Cancelados).</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Catálogo de Productos</h3>
+                    <p>Administración de productos con imágenes, precios, categorías y estadísticas de ventas.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Configuración</h3>
+                    <p>Gestión del perfil de administrador, opciones de seguridad y preferencias de notificaciones.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Representación del Dashboard</h2>
+            
+            <div class="dashboard-mockup">
+                <div class="dashboard-header">
+                    <div class="logo">
+                        <div class="logo-icon">M</div>
+                        <span style="font-weight: 600; color: #4b91ff;">MiApp Admin</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 36px; height: 36px; border-radius: 50%; background-color: #f3f4f6; display: flex; align-items: center; justify-content: center;">
+                            <span style="color: #666;">🔔</span>
+                        </div>
+                        <div style="width: 36px; height: 36px; border-radius: 50%; overflow: hidden; background-color: #eee;">
+                            <div style="width: 100%; height: 100%; background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-weight: bold; color: #666;">JP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex;">
+                    <!-- Sidebar -->
+                    <div class="sidebar">
+                        <div style="margin-bottom: 20px;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; overflow: hidden; margin-bottom: 10px;">
+                                <div style="width: 100%; height: 100%; background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                                    <span style="font-weight: bold; color: #666;">JP</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 500;">Juan Pérez</div>
+                                <div style="font-size: 13px; color: #666;">Administrador</div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="sidebar-item active">📊 Dashboard</div>
+                            <div class="sidebar-item">👤 Usuarios</div>
+                            <div class="sidebar-item">🛍️ Pedidos</div>
+                            <div class="sidebar-item">📦 Productos</div>
+                            <div class="sidebar-item">⚙️ Configuración</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Main Content -->
+                    <div class="dashboard-content" style="flex: 1;">
+                        <div style="margin-bottom: 20px;">
+                            <h2 style="margin: 0;">¡Bienvenido, Juan!</h2>
+                            <p style="margin: 5px 0 0; color: #666;">Panel de administración - 19 de Mayo, 2025</p>
+                        </div>
+                        
+                        <!-- Stats Cards -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; background-color: rgba(75, 145, 255, 0.1); display: flex; align-items: center; justify-content: center;">
+                                    <span style="color: #4b91ff;">👤</span>
+                                </div>
+                                <div style="color: #666; font-size: 14px;">Total Usuarios</div>
+                                <div style="font-size: 24px; font-weight: 600; margin: 5px 0;">5,248</div>
+                                <div style="font-size: 13px; color: #10b981; display: flex; align-items: center;">
+                                    <span>↑</span>
+                                    <span>12.3%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; background-color: rgba(244, 63, 94, 0.1); display: flex; align-items: center; justify-content: center;">
+                                    <span style="color: #f43f5e;">🛍️</span>
+                                </div>
+                                <div style="color: #666; font-size: 14px;">Total Pedidos</div>
+                                <div style="font-size: 24px; font-weight: 600; margin: 5px 0;">1,473</div>
+                                <div style="font-size: 13px; color: #10b981; display: flex; align-items: center;">
+                                    <span>↑</span>
+                                    <span>8.2%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; background-color: rgba(234, 179, 8, 0.1); display: flex; align-items: center; justify-content: center;">
+                                    <span style="color: #eab308;">💰</span>
+                                </div>
+                                <div style="color: #666; font-size: 14px;">Ingresos</div>
+                                <div style="font-size: 24px; font-weight: 600; margin: 5px 0;">$48,592</div>
+                                <div style="font-size: 13px; color: #ef4444; display: flex; align-items: center;">
+                                    <span>↓</span>
+                                    <span>3.1%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; background-color: rgba(75, 145, 255, 0.1); display: flex; align-items: center; justify-center;">
+                                    <span style="color: #4b91ff;">📦</span>
+                                </div>
+                                <div style="color: #666; font-size: 14px;">Productos</div>
+                                <div style="font-size: 24px; font-weight: 600; margin: 5px 0;">892</div>
+                                <div style="font-size: 13px; color: #10b981; display: flex; align-items: center;">
+                                    <span>↑</span>
+                                    <span>4.7%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Charts -->
+                        <div class="charts-grid">
+                            <div class="chart-card">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                                    <div style="font-weight: 500;">Ventas Mensuales</div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <span style="color: #666;">⟳</span>
+                                        <span style="color: #666;">⋯</span>
+                                    </div>
+                                </div>
+                                <div style="height: 230px; background-color: #f9fafb; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                    <div style="text-align: center; color: #666;">
+                                        <div>[Gráfico de Barras]</div>
+                                        <div style="font-size: 13px; margin-top: 5px;">Comparativa mensual de ventas</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-card">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                                    <div style="font-weight: 500;">Usuarios Activos</div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <span style="color: #666;">⟳</span>
+                                        <span style="color: #666;">⋯</span>
+                                    </div>
+                                </div>
+                                <div style="height: 230px; background-color: #f9fafb; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                    <div style="text-align: center; color: #666;">
+                                        <div>[Gráfico de Líneas]</div>
+                                        <div style="font-size: 13px; margin-top: 5px;">Tendencia de usuarios activos</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Orders -->
+                        <div style="background-color: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                                <div style="font-weight: 500;">Pedidos Recientes</div>
+                                <a href="#" style="color: #4b91ff; font-size: 14px; text-decoration: none;">Ver todos</a>
+                            </div>
+                            
+                            <div style="background-color: #f9fafb; border-radius: 8px; padding: 10px; margin-bottom: 10px;">
+                                <div style="display: grid; grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr; gap: 10px; font-size: 12px; color: #666; text-transform: uppercase; font-weight: 500;">
+                                    <div>ID Pedido</div>
+                                    <div>Cliente</div>
+                                    <div>Estado</div>
+                                    <div>Fecha</div>
+                                    <div>Total</div>
+                                    <div>Acciones</div>
+                                </div>
+                            </div>
+                            
+                            <div style="max-height: 300px; overflow-y: auto;">
+                                <!-- Order 1 -->
+                                <div style="display: grid; grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr; gap: 10px; padding: 12px 8px; border-bottom: 1px solid #f3f4f6; align-items: center;">
+                                    <div style="font-weight: 500;">#ORD-0102</div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 30px; height: 30px; border-radius: 50%; background-color: #ddd;"></div>
+                                        <span>María González</span>
+                                    </div>
+                                    <div>
+                                        <span style="background-color: rgba(16, 185, 129, 0.1); color: #10b981; padding: 4px 8px; border-radius: 999px; font-size: 12px;">Entregado</span>
+                                    </div>
+                                    <div style="color: #666;">24 May, 2023</div>
+                                    <div style="font-weight: 500;">$124.00</div>
+                                    <div style="display: flex; gap: 8px;">
+                                        <span style="color: #4b91ff;">👁️</span>
+                                        <span style="color: #666;">✏️</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Order 2 -->
+                                <div style="display: grid; grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr; gap: 10px; padding: 12px 8px; border-bottom: 1px solid #f3f4f6; align-items: center;">
+                                    <div style="font-weight: 500;">#ORD-0101</div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 30px; height: 30px; border-radius: 50%; background-color: #ddd;"></div>
+                                        <span>Carlos Rodríguez</span>
+                                    </div>
+                                    <div>
+                                        <span style="background-color: rgba(234, 179, 8, 0.1); color: #eab308; padding: 4px 8px; border-radius: 999px; font-size: 12px;">En proceso</span>
+                                    </div>
+                                    <div style="color: #666;">24 May, 2023</div>
+                                    <div style="font-weight: 500;">$89.50</div>
+                                    <div style="display: flex; gap: 8px;">
+                                        <span style="color: #4b91ff;">👁️</span>
+                                        <span style="color: #666;">✏️</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Products and Activity -->
+                        <div class="activity-grid">
+                            <div style="background-color: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                                    <div style="font-weight: 500;">Productos Más Vendidos</div>
+                                    <a href="#" style="color: #4b91ff; font-size: 14px; text-decoration: none;">Ver todos</a>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
+                                    <div style="width: 60px; height: 60px; background-color: #f3f4f6; border-radius: 8px;"></div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 500;">Auriculares Inalámbricos Pro</div>
+                                        <div style="font-size: 13px; color: #666;">Electrónica | ID: PRD-001</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-weight: 500;">$159.99</div>
+                                        <div style="font-size: 12px; color: #10b981;">+324 ventas</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
+                                    <div style="width: 60px; height: 60px; background-color: #f3f4f6; border-radius: 8px;"></div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 500;">Altavoz Bluetooth Portátil</div>
+                                        <div style="font-size: 13px; color: #666;">Electrónica | ID: PRD-002</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-weight: 500;">$89.99</div>
+                                        <div style="font-size: 12px; color: #10b981;">+256 ventas</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="background-color: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                                    <div style="font-weight: 500;">Actividad Reciente</div>
+                                    <a href="#" style="color: #4b91ff; font-size: 14px; text-decoration: none;">Ver todas</a>
+                                </div>
+                                
+                                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 50%; background-color: rgba(75, 145, 255, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <span style="color: #4b91ff; font-size: 12px;">👤</span>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 14px;">Nuevo usuario registrado <span style="font-weight: 500;">Laura Sánchez</span></div>
+                                        <div style="font-size: 12px; color: #666;">Hace 5 minutos</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 50%; background-color: rgba(16, 185, 129, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <span style="color: #10b981; font-size: 12px;">🛍️</span>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 14px;">Nuevo pedido <span style="font-weight: 500;">#ORD-0102</span> completado</div>
+                                        <div style="font-size: 12px; color: #666;">Hace 27 minutos</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Otras Secciones</h2>
+            
+            <h3>Gestión de Usuarios</h3>
+            <p>La página de gestión de usuarios incluye:</p>
+            <ul>
+                <li>Barra de búsqueda para filtrar usuarios</li>
+                <li>Pestañas para categorizar usuarios (Todos, Activos, Inactivos)</li>
+                <li>Tabla con información detallada (nombre, ID, estado, fecha de registro)</li>
+                <li>Opciones para ver y editar información de usuarios</li>
+            </ul>
+            
+            <h3>Sistema de Pedidos</h3>
+            <p>La sección de pedidos contiene:</p>
+            <ul>
+                <li>Filtros avanzados para buscar pedidos específicos</li>
+                <li>Pestañas por estado (Todos, Entregados, En proceso, Cancelados)</li>
+                <li>Tabla detallada con información del cliente, estado, fecha y total</li>
+                <li>Herramientas de gestión para cada pedido</li>
+            </ul>
+            
+            <h3>Catálogo de Productos</h3>
+            <p>La gestión de productos incluye:</p>
+            <ul>
+                <li>Vista en cuadrícula de todos los productos con imágenes</li>
+                <li>Categorización por tipo de producto</li>
+                <li>Filtros de búsqueda y ordenación</li>
+                <li>Detalles como precio, categoría, ventas y opciones de edición</li>
+            </ul>
+            
+            <h3>Configuración</h3>
+            <p>La sección de configuración permite:</p>
+            <ul>
+                <li>Gestión del perfil de administrador (nombre, email, foto)</li>
+                <li>Opciones de seguridad para cambiar contraseña</li>
+                <li>Preferencias de notificaciones personalizables</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Características Técnicas</h2>
+            <ul>
+                <li>Diseño completamente responsivo que funciona en móviles, tablets y escritorio</li>
+                <li>Interfaz moderna con animaciones suaves para mejor experiencia de usuario</li>
+                <li>Sistema de navegación intuitivo con menú lateral y opciones de búsqueda</li>
+                <li>Componentes reutilizables creados con React y estilizados con TailwindCSS</li>
+                <li>Datos simulados que pueden ser fácilmente reemplazados por una API real</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
