@@ -4,7 +4,7 @@ export default function Sidebar() {
   const [location, setLocation] = useLocation();
 
   const adminUser = {
-    name: "Juan Pérez",
+    name: "Pastor David",
     role: "Administrador",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100"
   };
@@ -20,9 +20,9 @@ export default function Sidebar() {
       <div className="p-6">
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center">
-            <span className="text-white font-bold text-lg">M</span>
+            <span className="text-white font-bold text-lg">I</span>
           </div>
-          <h1 className="text-lg font-semibold text-primary">MiApp Admin</h1>
+          <h1 className="text-lg font-semibold text-primary">Iglesia Admin</h1>
         </div>
       </div>
 
@@ -53,31 +53,71 @@ export default function Sidebar() {
           <li>
             <a 
               href="#" 
-              onClick={(e) => { e.preventDefault(); setLocation("/usuarios"); }}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/usuarios") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+              onClick={(e) => { e.preventDefault(); setLocation("/miembros"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/miembros") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
             >
               <i className="ri-user-line text-xl"></i>
-              <span>Usuarios</span>
+              <span>Miembros</span>
             </a>
           </li>
           <li>
             <a 
               href="#" 
-              onClick={(e) => { e.preventDefault(); setLocation("/pedidos"); }}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/pedidos") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+              onClick={(e) => { e.preventDefault(); setLocation("/eventos"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/eventos") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
             >
-              <i className="ri-shopping-bag-line text-xl"></i>
-              <span>Pedidos</span>
+              <i className="ri-calendar-event-line text-xl"></i>
+              <span>Eventos</span>
             </a>
           </li>
           <li>
             <a 
               href="#" 
-              onClick={(e) => { e.preventDefault(); setLocation("/productos"); }}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/productos") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+              onClick={(e) => { e.preventDefault(); setLocation("/oraciones"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/oraciones") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
             >
-              <i className="ri-store-2-line text-xl"></i>
-              <span>Productos</span>
+              <i className="ri-prayer-fill text-xl"></i>
+              <span>Oraciones</span>
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#" 
+              onClick={(e) => { e.preventDefault(); setLocation("/cursos"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/cursos") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+            >
+              <i className="ri-book-open-line text-xl"></i>
+              <span>Cursos</span>
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#" 
+              onClick={(e) => { e.preventDefault(); setLocation("/donaciones"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/donaciones") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+            >
+              <i className="ri-hand-heart-line text-xl"></i>
+              <span>Donaciones</span>
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#" 
+              onClick={(e) => { e.preventDefault(); setLocation("/meditaciones"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/meditaciones") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+            >
+              <i className="ri-mental-health-line text-xl"></i>
+              <span>Meditaciones</span>
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#" 
+              onClick={(e) => { e.preventDefault(); setLocation("/sobre-nosotros"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/sobre-nosotros") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+            >
+              <i className="ri-information-line text-xl"></i>
+              <span>Sobre Nosotros</span>
             </a>
           </li>
           <li>

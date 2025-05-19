@@ -5,9 +5,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { queryClient } from "./lib/queryClient";
 import NotFound from "@/pages/not-found";
 import DashboardPage from "@/pages/DashboardPage";
-import UsersPage from "@/pages/UsersPage";
-import OrdersPage from "@/pages/OrdersPage";
-import ProductsPage from "@/pages/ProductsPage";
+import MiembrosPage from "@/pages/MiembrosPage";
+import EventosPage from "@/pages/EventosPage";
+import OracionesPage from "@/pages/OracionesPage";
+import CursosPage from "@/pages/CursosPage";
+import DonacionesPage from "@/pages/DonacionesPage";
+import MeditacionesPage from "@/pages/MeditacionesPage";
+import SobreNosotrosPage from "@/pages/SobreNosotrosPage";
 import SettingsPage from "@/pages/SettingsPage";
 import AppLayout from "@/components/layout/AppLayout";
 
@@ -17,9 +21,13 @@ function Router() {
       <Switch>
         <Route path="/" component={DashboardPage} />
         <Route path="/dashboard" component={DashboardPage} />
-        <Route path="/usuarios" component={UsersPage} />
-        <Route path="/pedidos" component={OrdersPage} />
-        <Route path="/productos" component={ProductsPage} />
+        <Route path="/miembros" component={MiembrosPage} />
+        <Route path="/eventos" component={EventosPage} />
+        <Route path="/oraciones" component={OracionesPage} />
+        <Route path="/cursos" component={CursosPage} />
+        <Route path="/donaciones" component={DonacionesPage} />
+        <Route path="/meditaciones" component={MeditacionesPage} />
+        <Route path="/sobre-nosotros" component={SobreNosotrosPage} />
         <Route path="/configuracion" component={SettingsPage} />
         <Route component={NotFound} />
       </Switch>
