@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SearchIcon, FilterIcon, PlusIcon, BookOpenIcon } from "@/lib/icons";
+import { SearchIcon, FilterIcon, PlusIcon } from "@/lib/icons";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Helmet } from "react-helmet";
@@ -47,7 +47,7 @@ export default function CursosPage() {
       duracion: "12 semanas",
       nivel: "intermedio",
       categoria: "liderazgo",
-      imageUrl: "https://images.unsplash.com/photo-1517486808906-6ca8b3f8e1c1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&h=200",
+      imageUrl: "https://impulso06.com/wp-content/uploads/2023/01/liderazgo-en-la-empresa-10-formas-de-liderar-.png",
       inscritos: 28
     },
     {
@@ -58,7 +58,7 @@ export default function CursosPage() {
       duracion: "10 semanas",
       nivel: "intermedio",
       categoria: "discipulado",
-      imageUrl: "https://images.unsplash.com/photo-1570124477929-2d95f2d7dd6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&h=200",
+      imageUrl: "https://transformaelmundo.com/wp-content/uploads/2019/06/istockphoto-847575018-612x612.jpg?w=569&h=379",
       inscritos: 35
     },
     {

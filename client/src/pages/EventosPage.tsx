@@ -28,13 +28,13 @@ export default function EventosPage() {
   const eventosSimulados: Evento[] = [
     {
       id: 1,
-      titulo: "Culto Dominical",
+      titulo: "Escuela Financiera",
       descripcion: "Servicio principal de adoración y predicación",
       fecha: "21 Mayo, 2023",
       hora: "10:00 AM",
       lugar: "Auditorio Principal",
       tipo: "culto",
-      imageUrl: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&h=200"
+      imageUrl: "https://crisfe.org/images/w_1024,f_jpeg/large/educacion-financiera-fundamental-para-la-vida-diaria.jpeg"
     },
     {
       id: 2,
