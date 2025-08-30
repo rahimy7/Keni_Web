@@ -66,58 +66,28 @@ export default function Sidebar() {
               onClick={(e) => { e.preventDefault(); setLocation("/eventos"); }}
               className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/eventos") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
             >
-              <i className="ri-calendar-event-line text-xl"></i>
+              <i className="ri-calendar-line text-xl"></i>
               <span>Eventos</span>
             </a>
           </li>
           <li>
             <a 
               href="#" 
-              onClick={(e) => { e.preventDefault(); setLocation("/oraciones"); }}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/oraciones") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+              onClick={(e) => { e.preventDefault(); setLocation("/empleos"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/empleos") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
             >
-              <i className="ri-prayer-fill text-xl"></i>
-              <span>Oraciones</span>
+              <i className="ri-briefcase-line text-xl"></i>
+              <span>Empleos</span>
             </a>
           </li>
           <li>
             <a 
               href="#" 
-              onClick={(e) => { e.preventDefault(); setLocation("/cursos"); }}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/cursos") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+              onClick={(e) => { e.preventDefault(); setLocation("/finanzas"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/finanzas") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
             >
-              <i className="ri-book-open-line text-xl"></i>
-              <span>Cursos</span>
-            </a>
-          </li>
-          <li>
-            <a 
-              href="#" 
-              onClick={(e) => { e.preventDefault(); setLocation("/donaciones"); }}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/donaciones") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
-            >
-              <i className="ri-hand-heart-line text-xl"></i>
-              <span>Donaciones</span>
-            </a>
-          </li>
-          <li>
-            <a 
-              href="#" 
-              onClick={(e) => { e.preventDefault(); setLocation("/meditaciones"); }}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/meditaciones") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
-            >
-              <i className="ri-mental-health-line text-xl"></i>
-              <span>Meditaciones</span>
-            </a>
-          </li>
-          <li>
-            <a 
-              href="#" 
-              onClick={(e) => { e.preventDefault(); setLocation("/sobre-nosotros"); }}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/sobre-nosotros") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
-            >
-              <i className="ri-information-line text-xl"></i>
-              <span>Sobre Nosotros</span>
+              <i className="ri-money-dollar-circle-line text-xl"></i>
+              <span>Finanzas</span>
             </a>
           </li>
           <li>
@@ -126,22 +96,11 @@ export default function Sidebar() {
               onClick={(e) => { e.preventDefault(); setLocation("/configuracion"); }}
               className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/configuracion") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
             >
-              <i className="ri-settings-3-line text-xl"></i>
+              <i className="ri-settings-line text-xl"></i>
               <span>Configuración</span>
             </a>
           </li>
         </ul>
-      </div>
-
-      <div className="p-4 border-t border-neutral-200">
-        <a 
-          href="#" 
-          onClick={(e) => e.preventDefault()}
-          className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-neutral-100 text-neutral-600"
-        >
-          <i className="ri-logout-box-line text-xl"></i>
-          <span>Cerrar sesión</span>
-        </a>
       </div>
     </aside>
   );
