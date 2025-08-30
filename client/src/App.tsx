@@ -14,7 +14,8 @@ import MeditacionesPage from "@/pages/MeditacionesPage";
 import SobreNosotrosPage from "@/pages/SobreNosotrosPage";
 import SettingsPage from "@/pages/SettingsPage";
 import AppLayout from "@/components/layout/AppLayout";
-import AdminJobsPage from "@/pages/adminJobsPage";
+import AdminJobsPage from "@/pages/AdminJobsPage";
+import ForosPage from "@/pages/ForosPage";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
         <Route path="/eventos" component={EventosPage} />
         <Route path="/oraciones" component={OracionesPage} />
         <Route path="/cursos" component={CursosPage} />
+        <Route path="/foros" component={ForosPage} />
         <Route path="/admin/jobs" component={AdminJobsPage} />
         <Route path="/donaciones" component={DonacionesPage} />
         <Route path="/meditaciones" component={MeditacionesPage} />
