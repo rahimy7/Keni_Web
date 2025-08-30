@@ -43,10 +43,10 @@ export default function TopSelling({ products, isLoading }: TopSellingProps) {
       <div className="space-y-4">
         {products.map((product) => (
           <div key={product.id} className="flex items-center space-x-4">
-            <img 
-              src={product.imageUrl} 
+            <img
+              src={product.imageUrl ?? ""}
               alt={product.name}
-              className="w-16 h-16 rounded-lg object-cover" 
+              className="w-16 h-16 rounded-lg object-cover"
             />
             <div className="flex-1">
               <h4 className="font-medium text-neutral-800">{product.name}</h4>

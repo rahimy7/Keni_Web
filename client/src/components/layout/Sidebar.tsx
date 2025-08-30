@@ -71,6 +71,16 @@ export default function Sidebar() {
             </a>
           </li>
           <li>
+            <a
+              href="#"
+              onClick={(e) => { e.preventDefault(); setLocation("/foros"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/foros") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+            >
+              <i className="ri-discuss-line text-xl"></i>
+              <span>Foros</span>
+            </a>
+          </li>
+          <li>
             <a 
               href="#" 
               onClick={(e) => { e.preventDefault(); setLocation("/empleos"); }}

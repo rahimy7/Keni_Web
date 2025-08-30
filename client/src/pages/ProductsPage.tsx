@@ -108,8 +108,8 @@ export default function ProductsPage() {
                   filteredProducts.map((product) => (
                     <Card key={product.id} className="overflow-hidden">
                       <div className="relative">
-                        <img 
-                          src={product.imageUrl}
+                        <img
+                          src={product.imageUrl ?? ""}
                           alt={product.name}
                           className="w-full h-48 object-cover"
                         />
