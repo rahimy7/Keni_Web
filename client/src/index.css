@@ -100,3 +100,18 @@
   height: 300px;
   position: relative;
 }
+
+@layer components {
+  .activity-icon {
+    @apply w-8 h-8 rounded-full flex items-center justify-center text-white;
+  }
+  .activity-icon.comment {
+    @apply bg-primary;
+  }
+  .activity-icon.thread {
+    @apply bg-secondary;
+  }
+  .activity-icon.heart {
+    @apply bg-accent;
+  }
+}
