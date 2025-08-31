@@ -83,8 +83,18 @@ export default function Sidebar() {
           <li>
             <a 
               href="#" 
-              onClick={(e) => { e.preventDefault(); setLocation("/empleos"); }}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/empleos") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+              onClick={(e) => { e.preventDefault(); setLocation("/cursos"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/cursos") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+            >
+              <i className="ri-briefcase-line text-xl"></i>
+              <span>Cursos</span>
+            </a>
+          </li>
+            <li>
+            <a 
+              href="#" 
+              onClick={(e) => { e.preventDefault(); setLocation("/admin/jobs"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/admin/jobs") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
             >
               <i className="ri-briefcase-line text-xl"></i>
               <span>Empleos</span>
@@ -93,8 +103,8 @@ export default function Sidebar() {
           <li>
             <a 
               href="#" 
-              onClick={(e) => { e.preventDefault(); setLocation("/finanzas"); }}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/finanzas") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
+              onClick={(e) => { e.preventDefault(); setLocation("/Oraciones"); }}
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg ${isActive("/oraciones") ? 'bg-primary bg-opacity-10 text-primary font-medium' : 'hover:bg-neutral-100 text-neutral-600'}`}
             >
               <i className="ri-money-dollar-circle-line text-xl"></i>
               <span>Finanzas</span>

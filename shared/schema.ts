@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { pgTable, text, serial, integer, boolean, timestamp, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -67,6 +68,8 @@ export const insertOrderSchema = createInsertSchema(orders).pick({
   date: true,
 });
 
+
+
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
 export type Order = typeof orders.$inferSelect & {
   customer: {
@@ -99,6 +102,8 @@ export const professionalAreas = pgTable("professional_areas", {
   description: text("description"),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+
 
 export const insertProfessionalAreaSchema = createInsertSchema(professionalAreas).pick({
   name: true,
@@ -201,6 +206,122 @@ export const jobApplications = pgTable("job_applications", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Forum categories
+export const categories = pgTable("categories", {
+  id: serial("id").primaryKey(),
+  name: varchar("name").notNull(),
+  description: text("description"),
+  icon: varchar("icon").notNull(),
+  color: varchar("color").notNull(),
+  slug: varchar("slug").notNull().unique(),
+  position: integer("position").notNull().default(0),
+  schedule: varchar("schedule"),
+  maxParticipants: integer("max_participants"),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Subforums within categories
+export const subforums = pgTable("subforums", {
+  id: serial("id").primaryKey(),
+  categoryId: integer("category_id").notNull().references(() => categories.id),
+  name: varchar("name").notNull(),
+  description: text("description"),
+  position: integer("position").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Forum threads/topics
+export const threads = pgTable("threads", {
+  id: serial("id").primaryKey(),
+  categoryId: integer("category_id").notNull().references(() => categories.id),
+  subforumId: integer("subforum_id").references(() => subforums.id),
+  authorId: varchar("author_id").notNull().references(() => users.id),
+  title: varchar("title").notNull(),
+  content: text("content").notNull(),
+  isSticky: boolean("is_sticky").notNull().default(false),
+  isLocked: boolean("is_locked").notNull().default(false),
+  viewCount: integer("view_count").notNull().default(0),
+  replyCount: integer("reply_count").notNull().default(0),
+  lastReplyAt: timestamp("last_reply_at"),
+  lastReplyBy: varchar("last_reply_by").references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Posts/replies within threads
+export const posts = pgTable("posts", {
+  id: serial("id").primaryKey(),
+  threadId: integer("thread_id").notNull().references(() => threads.id),
+  authorId: varchar("author_id").notNull().references(() => users.id),
+  content: text("content").notNull(),
+  parentId: integer("parent_id").references(() => posts.id), // for nested replies
+  isModerated: boolean("is_moderated").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+
+export const insertPostSchema = createInsertSchema(posts).omit({
+  id: true,
+  authorId: true,
+  createdAt: true,
+  updatedAt: true,
+});
+// User bookmarks/saved threads
+export const bookmarks = pgTable("bookmarks", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  threadId: integer("thread_id").notNull().references(() => threads.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// User subscriptions to categories/forums
+export const subscriptions = pgTable("subscriptions", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  categoryId: integer("category_id").references(() => categories.id),
+  subforumId: integer("subforum_id").references(() => subforums.id),
+  threadId: integer("thread_id").references(() => threads.id),
+  notificationLevel: varchar("notification_level").notNull().default("all"), // all, mentions, none
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Private messages between users
+export const privateMessages = pgTable("private_messages", {
+  id: serial("id").primaryKey(),
+  fromUserId: varchar("from_user_id").notNull().references(() => users.id),
+  toUserId: varchar("to_user_id").notNull().references(() => users.id),
+  subject: varchar("subject").notNull(),
+  content: text("content").notNull(),
+  isRead: boolean("is_read").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// User reactions/likes to posts
+export const reactions = pgTable("reactions", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  postId: integer("post_id").references(() => posts.id),
+  threadId: integer("thread_id").references(() => threads.id),
+  type: varchar("type").notNull().default("like"), // like, heart, support, thanks
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// User notifications
+export const notifications = pgTable("notifications", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  type: varchar("type").notNull(), // reply, mention, message, subscription
+  title: varchar("title").notNull(),
+  content: text("content"),
+  relatedId: integer("related_id"), // thread_id, post_id, message_id
+  relatedType: varchar("related_type"), // thread, post, message
+  isRead: boolean("is_read").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertJobApplicationSchema = createInsertSchema(jobApplications).pick({
   jobId: true,
   userProfileId: true,
@@ -216,6 +337,169 @@ export type JobApplication = typeof jobApplications.$inferSelect;
 
 export type InsertActivity = z.infer<typeof insertActivitySchema>;
 export type Activity = typeof activities.$inferSelect;
+
+
+// Relations
+export const userRelations = relations(users, ({ many }) => ({
+  threads: many(threads),
+  posts: many(posts),
+  bookmarks: many(bookmarks),
+  subscriptions: many(subscriptions),
+  sentMessages: many(privateMessages, { relationName: "sentMessages" }),
+  receivedMessages: many(privateMessages, { relationName: "receivedMessages" }),
+  reactions: many(reactions),
+  notifications: many(notifications),
+}));
+
+export const categoryRelations = relations(categories, ({ many }) => ({
+  subforums: many(subforums),
+  threads: many(threads),
+}));
+
+export const subforumRelations = relations(subforums, ({ one, many }) => ({
+  category: one(categories, {
+    fields: [subforums.categoryId],
+    references: [categories.id],
+  }),
+  threads: many(threads),
+}));
+
+export const threadRelations = relations(threads, ({ one, many }) => ({
+  category: one(categories, {
+    fields: [threads.categoryId],
+    references: [categories.id],
+  }),
+  subforum: one(subforums, {
+    fields: [threads.subforumId],
+    references: [subforums.id],
+  }),
+  author: one(users, {
+    fields: [threads.authorId],
+    references: [users.id],
+  }),
+  lastReplyUser: one(users, {
+    fields: [threads.lastReplyBy],
+    references: [users.id],
+  }),
+  posts: many(posts),
+}));
+
+export const postRelations = relations(posts, ({ one, many }) => ({
+  thread: one(threads, {
+    fields: [posts.threadId],
+    references: [threads.id],
+  }),
+  author: one(users, {
+    fields: [posts.authorId],
+    references: [users.id],
+  }),
+  parent: one(posts, {
+    fields: [posts.parentId],
+    references: [posts.id],
+    relationName: "postParent"
+  }),
+  replies: many(posts, { relationName: "postParent" }),
+  reactions: many(reactions),
+}));
+
+// Bookmark relations
+export const bookmarkRelations = relations(bookmarks, ({ one }) => ({
+  user: one(users, {
+    fields: [bookmarks.userId],
+    references: [users.id],
+  }),
+  thread: one(threads, {
+    fields: [bookmarks.threadId],
+    references: [threads.id],
+  }),
+}));
+
+// Subscription relations
+export const subscriptionRelations = relations(subscriptions, ({ one }) => ({
+  user: one(users, {
+    fields: [subscriptions.userId],
+    references: [users.id],
+  }),
+  category: one(categories, {
+    fields: [subscriptions.categoryId],
+    references: [categories.id],
+  }),
+  subforum: one(subforums, {
+    fields: [subscriptions.subforumId],
+    references: [subforums.id],
+  }),
+  thread: one(threads, {
+    fields: [subscriptions.threadId],
+    references: [threads.id],
+  }),
+}));
+
+// Private message relations
+export const privateMessageRelations = relations(privateMessages, ({ one }) => ({
+  fromUser: one(users, {
+    fields: [privateMessages.fromUserId],
+    references: [users.id],
+  }),
+  toUser: one(users, {
+    fields: [privateMessages.toUserId],
+    references: [users.id],
+  }),
+}));
+
+// Reaction relations
+export const reactionRelations = relations(reactions, ({ one }) => ({
+  user: one(users, {
+    fields: [reactions.userId],
+    references: [users.id],
+  }),
+  post: one(posts, {
+    fields: [reactions.postId],
+    references: [posts.id],
+  }),
+  thread: one(threads, {
+    fields: [reactions.threadId],
+    references: [threads.id],
+  }),
+}));
+
+// Notification relations
+export const notificationRelations = relations(notifications, ({ one }) => ({
+  user: one(users, {
+    fields: [notifications.userId],
+    references: [users.id],
+  }),
+}));
+
+export type InsertCategory = typeof categories.$inferInsert;
+export type Category = typeof categories.$inferSelect;
+
+export type InsertSubforum = typeof subforums.$inferInsert;
+export type Subforum = typeof subforums.$inferSelect;
+
+export type InsertThread = typeof threads.$inferInsert;
+export type Thread = typeof threads.$inferSelect;
+
+export type InsertPost = typeof posts.$inferInsert;
+export type Post = typeof posts.$inferSelect;
+
+
+
+export type InsertBookmark = typeof bookmarks.$inferInsert;
+export type Bookmark = typeof bookmarks.$inferSelect;
+
+export type InsertSubscription = typeof subscriptions.$inferInsert;
+export type Subscription = typeof subscriptions.$inferSelect;
+
+export type InsertPrivateMessage = typeof privateMessages.$inferInsert;
+export type PrivateMessage = typeof privateMessages.$inferSelect;
+
+export type InsertReaction = typeof reactions.$inferInsert;
+export type Reaction = typeof reactions.$inferSelect;
+
+export type InsertNotification = typeof notifications.$inferInsert;
+export type Notification = typeof notifications.$inferSelect;
+
+
 
 // Dashboard stats type (not stored in database, just for API response)
 export type DashboardStats = {

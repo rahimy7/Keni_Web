@@ -14,7 +14,7 @@ import MeditacionesPage from "@/pages/MeditacionesPage";
 import SobreNosotrosPage from "@/pages/SobreNosotrosPage";
 import SettingsPage from "@/pages/SettingsPage";
 import AppLayout from "@/components/layout/AppLayout";
-import AdminJobsPage from "@/pages/AdminJobsPage";
+import AdminJobsPage from "@/pages/adminJobsPage";
 import ForosPage from "@/pages/ForosPage";
 
 function Router() {
