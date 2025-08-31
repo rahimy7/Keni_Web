@@ -2,18 +2,21 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MessageSquare, Users, Eye } from "lucide-react";
+import { MessageSquare, Users } from "lucide-react";
 import { Link } from "wouter";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
+import { mockSubforums } from "@/data/mock-forum";
 
 interface SubforumListProps {
   categoryId: number;
 }
 
 export default function SubforumList({ categoryId }: SubforumListProps) {
-  const { data: subforums, isLoading } = useQuery({
+  const { data: subforums = mockSubforums[categoryId] || [], isLoading } = useQuery({
     queryKey: [`/api/categories/${categoryId}/subforums`],
+    queryFn: async () => mockSubforums[categoryId] || [],
+    initialData: mockSubforums[categoryId] || [],
     enabled: !!categoryId,
   });
 

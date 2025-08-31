@@ -9,15 +9,13 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Heart, Eye, Users, MessageCircle, Info, UserPlus, Calendar, Mail } from "lucide-react";
 import { Link } from "wouter";
+import { mockCategories } from "@/data/mock-forum";
 
 export default function Guest() {
-  const { data: categories, isLoading: categoriesLoading } = useQuery({
+  const { data: categories = mockCategories, isLoading: categoriesLoading } = useQuery({
     queryKey: ["/api/categories"],
-    retry: false,
-  });
-
-  const { data: recentActivity, isLoading: activityLoading } = useQuery({
-    queryKey: ["/api/activity/recent"],
+    queryFn: async () => mockCategories,
+    initialData: mockCategories,
     retry: false,
   });
 
