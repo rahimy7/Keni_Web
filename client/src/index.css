@@ -6,60 +6,54 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 20 14.3% 4.1%;
-  --muted: 60 4.8% 95.9%;
-  --muted-foreground: 25 5.3% 44.7%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 20 14.3% 4.1%;
-  --card: 0 0% 100%;
-  --card-foreground: 20 14.3% 4.1%;
-  --border: 20 5.9% 90%;
-  --input: 20 5.9% 90%;
-  --primary: 220 100% 65%;
-  --primary-foreground: 211 100% 99%;
-  --secondary: 0 100% 70%;
-  --secondary-foreground: 211 100% 99%;
-  --accent: 39 100% 70%;
-  --accent-foreground: 24 9.8% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 60 9.1% 97.8%;
-  --success: 142 76% 36%;
-  --success-foreground: 210 40% 98%;
-  --warning: 45 93% 47%;
-  --warning-foreground: 24 9.8% 10%;
-  --danger: 0 84% 60%;
-  --danger-foreground: 210 40% 98%;
-  --ring: 20 14.3% 4.1%;
-  --radius: 0.5rem;
+  /* Colores Adventistas */
+  --adventist-navy: #1e293b;
+  --adventist-navy-light: #334155;
+  --adventist-navy-dark: #0f172a;
+  --adventist-gold: #ebe5db;
+  --adventist-gold-light: #dfdacf;
+  --adventist-gold-dark: #ece6df;
+  
+  --background: 248 250 252;
+  --foreground: 15 23 42;
+  --muted: 241 245 249;
+  --muted-foreground: 100 116 139;
+  --popover: 255 255 255;
+  --popover-foreground: 15 23 42;
+  --card: 255 255 255;
+  --card-foreground: 15 23 42;
+  --border: 226 232 240;
+  --input: 226 232 240;
+  
+  /* Colores principales adventistas */
+  --primary: 30 41 59; /* slate-800 */
+  --primary-foreground: 248 250 252;
+  --secondary: 245 158 11; /* amber-500 */
+  --secondary-foreground: 30 41 59;
+  --accent: 251 191 36; /* amber-400 */
+  --accent-foreground: 30 41 59;
+  
+  --destructive: 220 38 38;
+  --destructive-foreground: 248 250 252;
+  --success: 34 197 94;
+  --success-foreground: 248 250 252;
+  --warning: 245 158 11;
+  --warning-foreground: 30 41 59;
+  --ring: 245 158 11;
+  --radius: 0.75rem;
 }
 
 .dark {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --primary: 220 100% 65%;
-  --primary-foreground: 211 100% 99%;
-  --secondary: 0 100% 70%;
-  --secondary-foreground: 211 100% 99%;
-  --accent: 39 100% 70%;
-  --accent-foreground: 24 9.8% 10%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --success: 142 76% 36%;
-  --success-foreground: 210 40% 98%;
-  --warning: 45 93% 47%;
-  --warning-foreground: 24 9.8% 10%;
-  --danger: 0 84% 60%;
-  --danger-foreground: 210 40% 98%;
-  --ring: 240 4.9% 83.9%;
+  --background: 15 23 42;
+  --foreground: 248 250 252;
+  --muted: 30 41 59;
+  --muted-foreground: 148 163 184;
+  --popover: 30 41 59;
+  --popover-foreground: 248 250 252;
+  --card: 30 41 59;
+  --card-foreground: 248 250 252;
+  --border: 51 65 85;
+  --input: 51 65 85;
 }
 
 @layer base {
@@ -68,19 +62,129 @@
   }
 
   body {
-    @apply font-sans antialiased bg-[#F8F9FA] text-neutral-800;
+    @apply font-sans antialiased bg-slate-50 text-slate-800;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   }
 }
 
-.dashboard-stat-card {
+/* Estilos específicos adventistas */
+.adventist-gradient {
+  background: linear-gradient(135deg, var(--adventist-navy) 0%, var(--adventist-navy-light) 100%);
+}
+
+.adventist-gold-gradient {
+  background: linear-gradient(135deg, var(--adventist-gold) 0%, var(--adventist-gold-light) 100%);
+}
+
+.adventist-card {
+  @apply bg-white rounded-xl shadow-sm border border-slate-200/60;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.adventist-card:hover {
+  @apply shadow-lg;
+  transform: translateY(-2px);
   transition: all 0.3s ease;
 }
 
-.dashboard-stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+.adventist-button-primary {
+  @apply bg-slate-800 text-white hover:bg-slate-700 font-medium px-4 py-2 rounded-lg;
+  box-shadow: 0 4px 14px 0 rgba(30, 41, 59, 0.25);
+  transition: all 0.3s ease;
 }
 
+.adventist-button-primary:hover {
+  box-shadow: 0 6px 20px 0 rgba(30, 41, 59, 0.35);
+  transform: translateY(-1px);
+}
+
+.adventist-button-secondary {
+  @apply bg-amber-500 text-slate-800 hover:bg-amber-400 font-medium px-4 py-2 rounded-lg;
+  box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.25);
+  transition: all 0.3s ease;
+}
+
+.adventist-button-secondary:hover {
+  box-shadow: 0 6px 20px 0 rgba(245, 158, 11, 0.35);
+  transform: translateY(-1px);
+}
+
+.adventist-stat-card {
+  @apply bg-white rounded-xl p-6 shadow-sm border border-slate-200/60;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+  transition: all 0.3s ease;
+}
+
+.adventist-stat-card:hover {
+  @apply shadow-lg;
+  transform: translateY(-3px);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.adventist-nav-active {
+  @apply bg-gradient-to-r from-amber-500/20 to-yellow-400/20 text-amber-400 border border-amber-400/30;
+  box-shadow: 0 4px 12px 0 rgba(245, 158, 11, 0.15);
+}
+
+.adventist-header {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+  box-shadow: 0 4px 20px 0 rgba(30, 41, 59, 0.15);
+}
+
+.adventist-sidebar {
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  box-shadow: 4px 0 20px 0 rgba(15, 23, 42, 0.25);
+}
+
+/* Efectos de iluminación */
+.adventist-glow {
+  box-shadow: 
+    0 0 20px rgba(245, 158, 11, 0.15),
+    0 4px 20px rgba(30, 41, 59, 0.1);
+}
+
+.adventist-text-gradient {
+  background: linear-gradient(135deg, var(--adventist-gold) 0%, var(--adventist-gold-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animaciones */
+@keyframes adventist-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+  }
+  70% { 
+    box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+  }
+}
+
+.adventist-pulse {
+  animation: adventist-pulse 2s infinite;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--adventist-gold), var(--adventist-gold-light));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--adventist-gold-dark);
+}
+
+/* Responsive adjustments */
 @media (min-width: 1024px) {
   .main-content {
     margin-left: 16rem;
@@ -90,6 +194,7 @@
 .mobile-nav {
   transform: translateX(-100%);
   transition: transform 0.3s ease-in-out;
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #334155 100%);
 }
 
 .mobile-nav.active {
@@ -101,17 +206,74 @@
   position: relative;
 }
 
-@layer components {
-  .activity-icon {
-    @apply w-8 h-8 rounded-full flex items-center justify-center text-white;
-  }
-  .activity-icon.comment {
-    @apply bg-primary;
-  }
-  .activity-icon.thread {
-    @apply bg-secondary;
-  }
-  .activity-icon.heart {
-    @apply bg-accent;
-  }
+/* Componentes específicos */
+.activity-icon {
+  @apply w-8 h-8 rounded-full flex items-center justify-center text-white shadow-sm;
+}
+
+.activity-icon.comment {
+  background: linear-gradient(135deg, var(--adventist-navy), var(--adventist-navy-light));
+}
+
+.activity-icon.thread {
+  background: linear-gradient(135deg, var(--adventist-gold), var(--adventist-gold-light));
+}
+
+.activity-icon.heart {
+  @apply bg-red-500;
+}
+
+.activity-icon.event {
+  @apply bg-green-500;
+}
+
+/* Efectos para cards de stats */
+.stat-card-adventist {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card-adventist::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    rgba(245, 158, 11, 0.1), 
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.stat-card-adventist:hover::before {
+  left: 100%;
+}
+
+/* Badges adventistas */
+.adventist-badge,
+.member-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  background: #fff; /* Fondo blanco */
+  color: #334155;   /* Texto oscuro */
+  border: 1px solid #e2e8f0; /* Borde gris claro */
+}
+
+/* Tarjeta de miembro amigable */
+.member-card,
+.adventist-card {
+  @apply bg-white rounded-xl shadow-sm border border-slate-200/60;
+  color: #1e293b;
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.98);
+  transition: box-shadow 0.3s;
+}
+
+/* Quitar gradientes amarillos */
+.adventist-gold-gradient,
+::-webkit-scrollbar-thumb {
+  background: #e2e8f0; /* Gris claro */
 }

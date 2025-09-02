@@ -1,228 +1,631 @@
-// src/pages/forum/guest.tsx
+// AdminForosPage.tsx
+import React, { useState } from 'react';
+import { Search, Plus, Edit, Trash2, Eye, Users, MessageSquare, Calendar, Filter, MoreHorizontal, TrendingUp, Activity, BookOpen, Hash } from 'lucide-react';
+import { Helmet } from "react-helmet";
 
-import { useQuery } from "@tanstack/react-query";
-import Footer from "@/components/layout/footer";
-import CrisisBanner from "@/components/layout/crisis-banner";
-import CategoryCard from "@/components/forum/category-card";
-import RecentActivity from "@/components/forum/recent-activity";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Heart, Eye, Users, MessageCircle, Info, UserPlus } from "lucide-react";
-import { Link } from "wouter";
-import { mockCategories } from "@/data/mock-forum";
-import { motion } from "framer-motion";
+// Tipos de datos
+interface Category {
+  id: number;
+  name: string;
+  description: string;
+  type: 'thematic' | 'course';
+  icon: string;
+  color: string;
+  subforums: number;
+  threads: number;
+  posts: number;
+  members: number;
+  isActive: boolean;
+  createdAt: string;
+  moderators: string[];
+  schedule?: string;
+  courseCode?: string;
+}
 
-export default function Guest() {
-  const { data: categories = mockCategories, isLoading: categoriesLoading } = useQuery({
-    queryKey: ["/api/categories"],
-    queryFn: async () => mockCategories,
-    initialData: mockCategories,
-    retry: false,
+interface FormData {
+  name: string;
+  description: string;
+  type: 'thematic' | 'course';
+  icon: string;
+}
+
+interface Subforum {
+  id: number;
+  name: string;
+  categoryId: number;
+  threads: number;
+  posts: number;
+  members: number;
+}
+
+// Datos mock mejorados para la administración
+const mockForumStats = {
+  totalCategories: 8,
+  totalSubforums: 24,
+  totalThreads: 1547,
+  totalPosts: 8934,
+  activeUsers: 245,
+  newUsersToday: 12,
+  postsToday: 67,
+  threadsToday: 23
+};
+
+const mockCategories: Category[] = [
+  {
+    id: 1,
+    name: "Salud Mental",
+    description: "Espacio seguro para hablar sobre salud mental",
+    type: "thematic",
+    icon: "🧠",
+    color: "#8B5CF6",
+    subforums: 4,
+    threads: 234,
+    posts: 1456,
+    members: 342,
+    isActive: true,
+    createdAt: "2024-01-15",
+    moderators: ["Ana García", "Dr. Martínez"],
+    schedule: "Lunes 18:00"
+  },
+  {
+    id: 2,
+    name: "Autoestima y Motivación",
+    description: "Comparte técnicas para mejorar autoestima",
+    type: "thematic",
+    icon: "☀️",
+    color: "#F59E0B",
+    subforums: 3,
+    threads: 189,
+    posts: 892,
+    members: 278,
+    isActive: true,
+    createdAt: "2024-02-01",
+    moderators: ["Luis Rodríguez"],
+    schedule: "Miércoles 16:00"
+  },
+  {
+    id: 3,
+    name: "Curso: Mindfulness Básico",
+    description: "Foro del curso de introducción al mindfulness",
+    type: "course",
+    icon: "🧘",
+    color: "#10B981",
+    subforums: 5,
+    threads: 98,
+    posts: 567,
+    members: 156,
+    isActive: true,
+    createdAt: "2024-03-10",
+    moderators: ["María López", "Instructor Zen"],
+    courseCode: "MIND-001"
+  },
+  {
+    id: 4,
+    name: "Curso: Gestión del Estrés",
+    description: "Técnicas avanzadas para manejar el estrés",
+    type: "course",
+    icon: "💆‍♀️",
+    color: "#3B82F6",
+    subforums: 6,
+    threads: 145,
+    posts: 723,
+    members: 89,
+    isActive: true,
+    createdAt: "2024-02-20",
+    moderators: ["Dr. Hernández"],
+    courseCode: "STRESS-002"
+  },
+  {
+    id: 5,
+    name: "Relaciones Familiares",
+    description: "Apoyo en dinámicas familiares",
+    type: "thematic",
+    icon: "👨‍👩‍👧‍👦",
+    color: "#EF4444",
+    subforums: 2,
+    threads: 67,
+    posts: 234,
+    members: 123,
+    isActive: false,
+    createdAt: "2024-01-30",
+    moderators: ["Carmen Ruiz"],
+    schedule: "Sábados 10:00"
+  }
+];
+
+const mockSubforums: Subforum[] = [
+  { id: 1, name: "Depresión", categoryId: 1, threads: 89, posts: 456, members: 234 },
+  { id: 2, name: "Ansiedad", categoryId: 1, threads: 67, posts: 389, members: 198 },
+  { id: 3, name: "Trastornos Alimentarios", categoryId: 1, threads: 45, posts: 267, members: 145 },
+  { id: 4, name: "Adicciones", categoryId: 1, threads: 33, posts: 344, members: 89 },
+  { id: 5, name: "Historias de Superación", categoryId: 2, threads: 78, posts: 456, members: 167 },
+  { id: 6, name: "Técnicas de Motivación", categoryId: 2, threads: 56, posts: 234, members: 123 },
+  { id: 7, name: "Autoconocimiento", categoryId: 2, threads: 55, posts: 202, members: 98 }
+];
+
+export default function AdminForosPage() {
+  const [selectedTab, setSelectedTab] = useState<string>('overview');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [filterType, setFilterType] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    description: '',
+    type: 'thematic',
+    icon: '🧠'
   });
 
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-      <CrisisBanner />
-      <header className="fixed top-0 inset-x-0 z-40 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <h1 className="text-xl font-semibold tracking-tight">SafeSpace - Foros</h1>
-          <Link href="/">
-            <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
-              Inicio
-            </Button>
-          </Link>
+  const filteredCategories = mockCategories.filter((category: Category) => {
+    const matchesSearch = category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         category.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType = filterType === 'all' || category.type === filterType;
+    return matchesSearch && matchesType;
+  });
+
+  interface StatCardProps {
+    title: string;
+    value: number;
+    change?: number;
+    icon: React.ComponentType<{ className?: string }>;
+    color?: string;
+  }
+
+  const StatCard: React.FC<StatCardProps> = ({ title, value, change, icon: Icon, color = "text-blue-600" }) => (
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-gray-600 mb-1">{title}</p>
+          <p className="text-2xl font-bold text-gray-900">{value.toLocaleString()}</p>
+          {change && (
+            <div className="flex items-center mt-2">
+              <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
+              <span className="text-sm text-green-600">+{change} hoy</span>
+            </div>
+          )}
         </div>
-      </header>
+        <div className={`p-3 rounded-lg bg-gray-50 ${color}`}>
+          <Icon className="w-6 h-6" />
+        </div>
+      </div>
+    </div>
+  );
 
-      <div className="pt-32 sm:pt-36">
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Sidebar */}
-            <aside className="lg:col-span-1">
-              <div className="space-y-6 sticky top-24">
-                <Card className="transition hover:shadow-lg border-none bg-gradient-to-br from-primary/10 to-primary/5">
-                  <CardHeader>
-                    <CardTitle className="text-lg flex items-center text-primary">
-                      <Eye size={20} className="mr-2" />
-                      Modo Visitante
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3 text-sm">
-                    <p>
-                      Estás explorando SafeSpace como visitante. Puedes leer todos los temas y obtener una vista completa de nuestra comunidad.
-                    </p>
-                    <ul className="space-y-2 text-xs text-muted-foreground">
-                      <li className="flex items-center">
-                        <span className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-                        Leer todos los temas
-                      </li>
-                      <li className="flex items-center">
-                        <span className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-                        Ver respuestas y comentarios
-                      </li>
-                      <li className="flex items-center">
-                        <span className="w-2 h-2 bg-red-500 rounded-full mr-2" />
-                        Crear temas o responder
-                      </li>
-                      <li className="flex items-center">
-                        <span className="w-2 h-2 bg-red-500 rounded-full mr-2" />
-                        Guardar o suscribirse
-                      </li>
-                    </ul>
-                    <a href="/api/login">
-                      <Button size="sm" className="w-full mt-4 transition hover:brightness-110">
-                        Unirse para Participar
-                      </Button>
-                    </a>
-                  </CardContent>
-                </Card>
+  interface CategoryCardProps {
+    category: Category;
+    onEdit: (category: Category) => void;
+    onViewDetails: (category: Category) => void;
+  }
 
-                <Card className="border-none shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-lg">Estadísticas</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3 text-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="flex items-center text-muted-foreground">
-                        <Users size={14} className="mr-2" />
-                        Miembros activos
-                      </span>
-                      <Badge variant="secondary">2,847</Badge>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="flex items-center text-muted-foreground">
-                        <MessageCircle size={14} className="mr-2" />
-                        Temas de apoyo
-                      </span>
-                      <Badge variant="secondary">1,234</Badge>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="flex items-center text-muted-foreground">
-                        <Heart size={14} className="mr-2" />
-                        Mensajes
-                      </span>
-                      <Badge variant="secondary">8,956</Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-none shadow-sm">
-                  <CardContent className="p-4">
-                    <Link href="/">
-                      <Button variant="outline" className="w-full">
-                        Volver al Inicio
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
+  const CategoryCard: React.FC<CategoryCardProps> = ({ category, onEdit, onViewDetails }) => (
+    <div className="bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-200 overflow-hidden">
+      <div className="p-6">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center space-x-3">
+            <div 
+              className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl"
+              style={{ backgroundColor: category.color + '20' }}
+            >
+              {category.icon}
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <h3 className="text-lg font-semibold text-gray-900">{category.name}</h3>
+                <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                  category.type === 'course' 
+                    ? 'bg-blue-100 text-blue-700' 
+                    : 'bg-purple-100 text-purple-700'
+                }`}>
+                  {category.type === 'course' ? 'Curso' : 'Temático'}
+                </span>
+                <span className={`w-2 h-2 rounded-full ${
+                  category.isActive ? 'bg-green-500' : 'bg-red-500'
+                }`} />
               </div>
-            </aside>
-
-            {/* Main content */}
-            <div className="lg:col-span-3">
-              <Alert className="mb-8">
-                <Info className="h-4 w-4" />
-                <AlertDescription>
-                  <strong>Bienvenido a SafeSpace.</strong> Estás explorando como visitante. Puedes leer todos los temas y ver cómo nuestra comunidad se apoya mutuamente.
-                </AlertDescription>
-              </Alert>
-
-              {/* Categorías */}
-              <section className="mb-12">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold tracking-tight">Categorías de Apoyo</h2>
-                  <Badge variant="outline">Solo lectura</Badge>
-                </div>
-
-                {categoriesLoading ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {Array.from({ length: 4 }).map((_, i) => (
-                      <Card key={i} className="animate-pulse">
-                        <CardContent className="p-6 space-y-3">
-                          <div className="h-6 bg-muted rounded w-2/3" />
-                          <div className="h-4 bg-muted rounded w-full" />
-                          <div className="h-4 bg-muted rounded w-1/2" />
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                ) : categories && categories.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {categories.map((category: any) => (
-                      <motion.div
-                        key={category.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <CategoryCard
-                          category={{
-                            ...category,
-                            stats: {
-                              threadCount: Math.floor(Math.random() * 200) + 50,
-                              postCount: Math.floor(Math.random() * 1000) + 200,
-                              memberCount: Math.floor(Math.random() * 500) + 100,
-                            },
-                            subforums: category.subforums || []
-                          }}
-                        />
-                      </motion.div>
-                    ))}
-                  </div>
-                ) : (
-                  <Card>
-                    <CardContent className="p-12 text-center">
-                      <MessageCircle className="mx-auto mb-4 text-muted-foreground" size={48} />
-                      <h3 className="text-xl font-semibold mb-2">Aún no hay categorías</h3>
-                      <p className="text-muted-foreground">
-                        La comunidad está en proceso de configuración. Pronto habrá espacios de apoyo disponibles.
-                      </p>
-                    </CardContent>
-                  </Card>
-                )}
-              </section>
-
-              {/* Actividad reciente */}
-              <section>
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold tracking-tight">Actividad Reciente</h2>
-                  <Badge variant="outline">Últimas 24 horas</Badge>
-                </div>
-                <RecentActivity />
-              </section>
-
-              {/* CTA para unirse */}
-              <Card className="mt-12 bg-gradient-to-r from-purple-600/10 to-pink-400/10 border-primary/10">
-                <CardContent className="p-8 text-center">
-                  <Heart className="mx-auto mb-4 text-primary" size={48} />
-                  <h3 className="text-2xl font-bold mb-4">¿Listo para Unirte a la Comunidad?</h3>
-                  <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                    Has visto cómo nuestra comunidad se apoya mutuamente. Únete de forma anónima
-                    para participar en conversaciones, crear temas y recibir apoyo personalizado.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="/api/login">
-                      <Button size="lg" className="bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:brightness-110">
-                        <UserPlus className="mr-2" size={20} />
-                        Unirse de Forma Anónima
-                      </Button>
-                    </a>
-                    <Link href="/">
-                      <Button variant="outline" size="lg">
-                        Volver al Inicio
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
+              <p className="text-sm text-gray-600 mt-1">{category.description}</p>
             </div>
           </div>
-        </main>
-      </div>
+          
+          <div className="flex items-center space-x-2">
+            <button 
+              onClick={() => onViewDetails(category)}
+              className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              title="Ver detalles"
+            >
+              <Eye className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => onEdit(category)}
+              className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+              title="Editar"
+            >
+              <Edit className="w-4 h-4" />
+            </button>
+            <button className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+              <MoreHorizontal className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
 
-      <Footer />
+        <div className="grid grid-cols-4 gap-4 mb-4">
+          <div className="text-center">
+            <p className="text-2xl font-bold text-gray-900">{category.subforums}</p>
+            <p className="text-xs text-gray-500">Subforos</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-gray-900">{category.threads}</p>
+            <p className="text-xs text-gray-500">Temas</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-gray-900">{category.posts}</p>
+            <p className="text-xs text-gray-500">Posts</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-gray-900">{category.members}</p>
+            <p className="text-xs text-gray-500">Miembros</p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between text-sm text-gray-500">
+          <span>Moderadores: {category.moderators.join(', ')}</span>
+          {category.schedule && (
+            <span className="flex items-center">
+              <Calendar className="w-4 h-4 mr-1" />
+              {category.schedule}
+            </span>
+          )}
+          {category.courseCode && (
+            <span className="flex items-center">
+              <BookOpen className="w-4 h-4 mr-1" />
+              {category.courseCode}
+            </span>
+          )}
+        </div>
+      </div>
     </div>
+  );
+
+  const handleInputChange = (field: keyof FormData, value: string | 'thematic' | 'course') => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log('Creating category:', formData);
+    setShowCreateModal(false);
+    setFormData({ name: '', description: '', type: 'thematic', icon: '🧠' });
+  };
+
+  const CreateCategoryModal = () => (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl max-w-lg w-full p-6">
+        <h3 className="text-lg font-semibold mb-4">Crear Nueva Categoría</h3>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+            <input 
+              value={formData.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+            <textarea 
+              value={formData.description}
+              onChange={(e) => handleInputChange('description', e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+              rows={3} 
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
+              <select 
+                value={formData.type}
+                onChange={(e) => handleInputChange('type', e.target.value as 'thematic' | 'course')}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="thematic">Temático</option>
+                <option value="course">Curso</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Icono</label>
+              <input 
+                value={formData.icon}
+                onChange={(e) => handleInputChange('icon', e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                placeholder="🧠" 
+              />
+            </div>
+          </div>
+          <div className="flex justify-end space-x-3 pt-4">
+            <button 
+              onClick={() => setShowCreateModal(false)}
+              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              Cancelar
+            </button>
+            <button 
+              onClick={handleSubmit}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Crear Categoría
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      <Helmet>
+        <title>Administración de Foros - MiApp Admin</title>
+        <meta name="description" content="Gestiona categorías, subforos y configuraciones de la comunidad" />
+      </Helmet>
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <div className="bg-white border-b border-gray-200 px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Administración de Foros</h1>
+              <p className="text-gray-600">Gestiona categorías, subforos y configuraciones de la comunidad</p>
+            </div>
+            <button 
+              onClick={() => setShowCreateModal(true)}
+              className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Nueva Categoría
+            </button>
+          </div>
+        </div>
+
+        {/* Navigation Tabs */}
+        <div className="bg-white border-b border-gray-200 px-6">
+          <nav className="flex space-x-8">
+            {[
+              { id: 'overview', label: 'Resumen', icon: Activity },
+              { id: 'categories', label: 'Categorías', icon: Hash },
+              { id: 'subforums', label: 'Subforos', icon: MessageSquare },
+              { id: 'moderation', label: 'Moderación', icon: Eye }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setSelectedTab(tab.id)}
+                className={`flex items-center py-4 px-2 border-b-2 text-sm font-medium transition-colors ${
+                  selectedTab === tab.id
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <tab.icon className="w-4 h-4 mr-2" />
+                {tab.label}
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        {/* Content */}
+        <div className="p-6">
+          {selectedTab === 'overview' && (
+            <div className="space-y-6">
+              {/* Statistics Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <StatCard 
+                  title="Total Categorías" 
+                  value={mockForumStats.totalCategories} 
+                  icon={Hash}
+                  color="text-purple-600"
+                />
+                <StatCard 
+                  title="Total Subforos" 
+                  value={mockForumStats.totalSubforums} 
+                  icon={MessageSquare}
+                  color="text-blue-600"
+                />
+                <StatCard 
+                  title="Temas Activos" 
+                  value={mockForumStats.totalThreads} 
+                  change={mockForumStats.threadsToday}
+                  icon={Users}
+                  color="text-green-600"
+                />
+                <StatCard 
+                  title="Usuarios Activos" 
+                  value={mockForumStats.activeUsers} 
+                  change={mockForumStats.newUsersToday}
+                  icon={Activity}
+                  color="text-orange-600"
+                />
+              </div>
+
+              {/* Recent Activity */}
+              <div className="bg-white rounded-xl p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold mb-4">Actividad Reciente</h3>
+                <div className="space-y-3">
+                  {[
+                    { action: "Nueva categoría creada", item: "Meditación Avanzada", time: "Hace 2 horas", type: "success" },
+                    { action: "Subforo moderado", item: "Depresión - Post eliminado", time: "Hace 4 horas", type: "warning" },
+                    { action: "Nuevo moderador asignado", item: "Dr. García en Ansiedad", time: "Hace 6 horas", type: "info" }
+                  ].map((activity, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-2 h-2 rounded-full ${
+                          activity.type === 'success' ? 'bg-green-500' :
+                          activity.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
+                        }`} />
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">{activity.action}</p>
+                          <p className="text-xs text-gray-500">{activity.item}</p>
+                        </div>
+                      </div>
+                      <span className="text-xs text-gray-400">{activity.time}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedTab === 'categories' && (
+            <div className="space-y-6">
+              {/* Filters */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex-1">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <input
+                      type="text"
+                      placeholder="Buscar categorías..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+                <div className="flex space-x-3">
+                  <select 
+                    value={filterType}
+                    onChange={(e) => setFilterType(e.target.value)}
+                    className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="all">Todos los tipos</option>
+                    <option value="thematic">Temáticos</option>
+                    <option value="course">Cursos</option>
+                  </select>
+                  <button className="flex items-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    <Filter className="w-4 h-4 mr-2" />
+                    Más filtros
+                  </button>
+                </div>
+              </div>
+
+              {/* Categories Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {filteredCategories.map((category: Category) => (
+                  <CategoryCard 
+                    key={category.id} 
+                    category={category}
+                    onEdit={(cat: Category) => console.log('Edit:', cat)}
+                    onViewDetails={(cat: Category) => setSelectedCategory(cat)}
+                  />
+                ))}
+              </div>
+
+              {filteredCategories.length === 0 && (
+                <div className="text-center py-12">
+                  <Hash className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron categorías</h3>
+                  <p className="text-gray-600">Intenta ajustar los filtros de búsqueda</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {selectedTab === 'subforums' && (
+            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h3 className="text-lg font-semibold">Gestión de Subforos</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="text-left py-3 px-6 font-medium text-gray-700">Nombre</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-700">Categoría</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-700">Temas</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-700">Posts</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-700">Miembros</th>
+                      <th className="text-left py-3 px-6 font-medium text-gray-700">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {mockSubforums.map((subforum) => {
+                      const category = mockCategories.find((c: Category) => c.id === subforum.categoryId);
+                      return (
+                        <tr key={subforum.id} className="hover:bg-gray-50">
+                          <td className="py-4 px-6 font-medium text-gray-900">{subforum.name}</td>
+                          <td className="py-4 px-6 text-gray-600">{category?.name}</td>
+                          <td className="py-4 px-6 text-gray-600">{subforum.threads}</td>
+                          <td className="py-4 px-6 text-gray-600">{subforum.posts}</td>
+                          <td className="py-4 px-6 text-gray-600">{subforum.members}</td>
+                          <td className="py-4 px-6">
+                            <div className="flex space-x-2">
+                              <button className="p-1 text-gray-400 hover:text-blue-600">
+                                <Edit className="w-4 h-4" />
+                              </button>
+                              <button className="p-1 text-gray-400 hover:text-red-600">
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {selectedTab === 'moderation' && (
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold mb-4">Panel de Moderación</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center p-4 border border-gray-200 rounded-lg">
+                    <div className="text-2xl font-bold text-yellow-600 mb-2">23</div>
+                    <div className="text-sm text-gray-600">Posts Pendientes</div>
+                  </div>
+                  <div className="text-center p-4 border border-gray-200 rounded-lg">
+                    <div className="text-2xl font-bold text-red-600 mb-2">8</div>
+                    <div className="text-sm text-gray-600">Reportes Abiertos</div>
+                  </div>
+                  <div className="text-center p-4 border border-gray-200 rounded-lg">
+                    <div className="text-2xl font-bold text-blue-600 mb-2">5</div>
+                    <div className="text-sm text-gray-600">Moderadores Activos</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-200">
+                  <h3 className="text-lg font-semibold">Reportes Recientes</h3>
+                </div>
+                <div className="p-6">
+                  <div className="space-y-4">
+                    {[
+                      { tipo: "Contenido inapropiado", subforo: "Ansiedad", reportado: "Hace 2 horas", estado: "Pendiente" },
+                      { tipo: "Spam", subforo: "Motivación", reportado: "Hace 4 horas", estado: "En revisión" },
+                      { tipo: "Acoso", subforo: "Depresión", reportado: "Hace 1 día", estado: "Resuelto" }
+                    ].map((reporte, index) => (
+                      <div key={index} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div>
+                          <div className="font-medium text-gray-900">{reporte.tipo}</div>
+                          <div className="text-sm text-gray-600">Subforo: {reporte.subforo} • {reporte.reportado}</div>
+                        </div>
+                        <span className={`px-3 py-1 text-xs font-medium rounded-full ${
+                          reporte.estado === 'Pendiente' ? 'bg-yellow-100 text-yellow-800' :
+                          reporte.estado === 'En revisión' ? 'bg-blue-100 text-blue-800' :
+                          'bg-green-100 text-green-800'
+                        }`}>
+                          {reporte.estado}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Modals */}
+        {showCreateModal && <CreateCategoryModal />}
+      </div>
+    </>
   );
 }
