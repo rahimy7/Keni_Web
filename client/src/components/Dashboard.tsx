@@ -112,28 +112,28 @@ export default function IglesiaDashboard() {
     });
   };
 
-  const StatCard: React.FC<StatCardProps> = ({ title, value, subtitle, change, icon: Icon, color, trend = 'up' }) => (
-    <div className="adventist-stat-card stat-card-adventist group">
-      <div className="flex items-center justify-between mb-4">
-        <div className={`p-3 rounded-xl ${color} group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-          <Icon className="w-6 h-6 text-white" />
+ const StatCard: React.FC<StatCardProps> = ({ title, value, subtitle, change, icon: Icon, color, trend = 'up' }) => (
+  <div className="dashboard-stat-card bg-white rounded-xl shadow-sm p-6 border border-slate-200/60 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+    <div className="flex items-center justify-between mb-3">
+      <div className={`p-3 rounded-xl ${color} shadow-lg`}>
+        <Icon className="w-6 h-6 text-white" />
+      </div>
+      {change && (
+        <div className={`flex items-center text-sm font-semibold px-2 py-1 rounded-full ${trend === 'up' ? 'text-emerald-600 bg-emerald-50' : 'text-red-600 bg-red-50'}`}>
+          <TrendingUp className={`w-4 h-4 mr-1 ${trend === 'down' ? 'rotate-180' : ''}`} />
+          <span>{change}%</span>
         </div>
-        {change && (
-          <div className={`flex items-center text-sm font-medium ${trend === 'up' ? 'text-emerald-600' : 'text-red-500'}`}>
-            <TrendingUp className={`w-4 h-4 mr-1 ${trend === 'down' ? 'rotate-180' : ''}`} />
-            <span>{change}%</span>
-          </div>
-        )}
-      </div>
-      <div>
-        <h3 className="text-2xl font-bold text-slate-800 mb-1">{value.toLocaleString()}</h3>
-        <p className="text-slate-600 text-sm font-semibold">{title}</p>
-        {subtitle && (
-          <p className="text-xs text-slate-500 mt-1 font-medium">{subtitle}</p>
-        )}
-      </div>
+      )}
     </div>
-  );
+    <div>
+      <h3 className="text-2xl font-bold text-slate-800 mb-1">{value.toLocaleString()}</h3>
+      <p className="text-slate-600 text-sm font-semibold">{title}</p>
+      {subtitle && (
+        <p className="text-xs text-slate-500 mt-1">{subtitle}</p>
+      )}
+    </div>
+  </div>
+);
 
   const QuickAction: React.FC<QuickActionProps> = ({ title, description, icon: Icon, color, onClick }) => (
     <button 
@@ -178,7 +178,7 @@ export default function IglesiaDashboard() {
       </div>
 
       {/* Main Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <StatCard
           title="Total Miembros"
           value={mockIglesiaStats.general.miembrosTotal}
@@ -214,7 +214,7 @@ export default function IglesiaDashboard() {
       </div>
 
       {/* Secondary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <StatCard
           title="Seminarios"
           value={mockIglesiaStats.seminarios.programados}
@@ -229,7 +229,7 @@ export default function IglesiaDashboard() {
           subtitle={`${mockIglesiaStats.fidelidad.miembrosComprometidos} comprometidos`}
           change={3.2}
           icon={Award}
-          color="bg-gradient-to-br from-yellow-500 to-yellow-600"
+         color="bg-gradient-to-br from-blue-500 to-blue-600"
         />
         <StatCard
           title="Participación Activa"
