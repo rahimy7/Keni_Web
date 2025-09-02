@@ -193,10 +193,10 @@ export default function MiembrosPage() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <Button variant="outline" className="flex items-center gap-2">
-                <FilterIcon className="h-4 w-4" />
-                Filtros
-              </Button>
+              <Button className="bg-white border border-slate-300 text-neutral-700 hover:bg-slate-100">
+  <FilterIcon className="h-4 w-4" />
+  Filtros
+</Button>
             </div>
           </CardContent>
         </Card>
@@ -269,96 +269,103 @@ export default function MiembrosPage() {
           </Card>
         ) : (
           filteredMiembros && filteredMiembros.length > 0 ? (
-            <Card>
-              <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-neutral-50 border-b border-neutral-200">
-                      <tr>
-                        <th className="whitespace-nowrap px-4 py-3 text-left text-sm font-medium text-neutral-500">Miembro</th>
-                        <th className="whitespace-nowrap px-4 py-3 text-left text-sm font-medium text-neutral-500">Contacto</th>
-                        <th className="whitespace-nowrap px-4 py-3 text-left text-sm font-medium text-neutral-500">Estado</th>
-                        <th className="whitespace-nowrap px-4 py-3 text-left text-sm font-medium text-neutral-500">Ministerios</th>
-                        <th className="whitespace-nowrap px-4 py-3 text-left text-sm font-medium text-neutral-500">Registro</th>
-                        <th className="whitespace-nowrap px-4 py-3 text-left text-sm font-medium text-neutral-500">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredMiembros.map((miembro) => (
-                        <tr key={miembro.id} className="border-b border-neutral-200">
-                          <td className="px-4 py-3">
-                            <div className="flex items-center gap-3">
-                              <div className="h-10 w-10 rounded-full overflow-hidden">
-                                <img 
-                                  src={miembro.imageUrl} 
-                                  alt={miembro.nombre}
-                                  className="h-full w-full object-cover" 
-                                />
-                              </div>
-                              <div>
-                                <div className="font-medium text-neutral-800">{miembro.nombre}</div>
-                                <div className="text-xs text-neutral-500">Miembro desde {miembro.miembroDesde}</div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <div className="text-sm text-neutral-800">{miembro.email}</div>
-                            <div className="text-xs text-neutral-500">{miembro.telefono}</div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <Badge 
-                              variant="outline" 
-                              className={`${getEstadoClass(miembro.estado)} border-0`}
-                            >
-                              {miembro.estado.charAt(0).toUpperCase() + miembro.estado.slice(1)}
-                            </Badge>
-                          </td>
-                          <td className="px-4 py-3">
-                            <div className="flex flex-wrap gap-1">
-                              {miembro.ministerios.length > 0 ? (
-                                miembro.ministerios.map((ministerio, index) => (
-                                  <Badge key={index} variant="outline" className="bg-neutral-100 text-neutral-800 border-0">
-                                    {ministerio}
-                                  </Badge>
-                                ))
-                              ) : (
-                                <span className="text-xs text-neutral-500">Ninguno</span>
-                              )}
-                            </div>
-                          </td>
-                          <td className="px-4 py-3 text-sm text-neutral-600">
-                            {miembro.fechaRegistro}
-                          </td>
-                          <td className="px-4 py-3">
-                            <div className="flex gap-2">
-                              <Button variant="outline" size="sm">
-                                Ver Perfil
-                              </Button>
-                              <Button variant="outline" size="sm">
-                                <i className="ri-more-2-fill"></i>
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+          <Card>
+  <CardContent className="p-0">
+    <div className="overflow-x-auto">
+      <table className="w-full bg-white text-sm">
+        <thead className="bg-neutral-50 border-b border-neutral-200">
+          <tr>
+            <th className="whitespace-nowrap px-4 py-3 text-left font-medium text-neutral-500">Miembro</th>
+            <th className="whitespace-nowrap px-4 py-3 text-left font-medium text-neutral-500">Contacto</th>
+            <th className="whitespace-nowrap px-4 py-3 text-left font-medium text-neutral-500">Estado</th>
+            <th className="whitespace-nowrap px-4 py-3 text-left font-medium text-neutral-500">Ministerios</th>
+            <th className="whitespace-nowrap px-4 py-3 text-left font-medium text-neutral-500">Registro</th>
+            <th className="whitespace-nowrap px-4 py-3 text-left font-medium text-neutral-500">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredMiembros.map((miembro) => (
+            <tr
+              key={miembro.id}
+              className="bg-white even:bg-slate-50 hover:bg-slate-100 transition"
+            >
+              <td className="px-4 py-3">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full overflow-hidden">
+                    <img
+                      src={miembro.imageUrl}
+                      alt={miembro.nombre}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <div className="font-medium text-neutral-800">{miembro.nombre}</div>
+                    <div className="text-xs text-neutral-500">Miembro desde {miembro.miembroDesde}</div>
+                  </div>
                 </div>
-              </CardContent>
-              <CardFooter className="flex items-center justify-between border-t p-4">
-                <div className="text-sm text-neutral-500">
-                  Mostrando <span className="font-medium">{filteredMiembros.length}</span> de <span className="font-medium">{miembros?.length}</span> miembros
+              </td>
+              <td className="px-4 py-3">
+                <div className="text-neutral-800">{miembro.email}</div>
+                <div className="text-xs text-neutral-500">{miembro.telefono}</div>
+              </td>
+              <td className="px-4 py-3">
+                <Badge
+                  variant="outline"
+                  className={`${getEstadoClass(miembro.estado)} border-0`}
+                >
+                  {miembro.estado.charAt(0).toUpperCase() + miembro.estado.slice(1)}
+                </Badge>
+              </td>
+              <td className="px-4 py-3">
+                <div className="flex flex-wrap gap-1">
+                  {miembro.ministerios.length > 0 ? (
+                    miembro.ministerios.map((ministerio, index) => (
+                      <Badge
+                        key={index}
+                        variant="outline"
+                        className="bg-neutral-100 text-neutral-800 border-0"
+                      >
+                        {ministerio}
+                      </Badge>
+                    ))
+                  ) : (
+                    <span className="text-xs text-neutral-500">Ninguno</span>
+                  )}
                 </div>
+              </td>
+              <td className="px-4 py-3 text-neutral-600">{miembro.fechaRegistro}</td>
+              <td className="px-4 py-3">
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" disabled>
-                    Anterior
+                  <Button variant="outline" size="sm">
+                    Ver Perfil
                   </Button>
-                  <Button variant="outline" size="sm" disabled>
-                    Siguiente
+                  <Button variant="outline" size="sm">
+                    <i className="ri-more-2-fill"></i>
                   </Button>
                 </div>
-              </CardFooter>
-            </Card>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </CardContent>
+  <CardFooter className="flex items-center justify-between border-t p-4 bg-white">
+    <div className="text-sm text-neutral-500">
+      Mostrando <span className="font-medium">{filteredMiembros.length}</span> de{" "}
+      <span className="font-medium">{miembros?.length}</span> miembros
+    </div>
+    <div className="flex gap-2">
+      <Button variant="outline" size="sm" disabled>
+        Anterior
+      </Button>
+      <Button variant="outline" size="sm" disabled>
+        Siguiente
+      </Button>
+    </div>
+  </CardFooter>
+</Card>
+
           ) : (
             <div className="py-8 text-center text-sm text-neutral-500 bg-white rounded-lg shadow">
               No se encontraron miembros
@@ -380,7 +387,7 @@ export default function MiembrosPage() {
                   </div>
                   <div className="w-full bg-neutral-200 rounded-full h-2">
                     <div 
-                      className="bg-success h-2 rounded-full" 
+                      className="bg-slate-500 h-2 rounded-full"  
                       style={{ width: `${miembros ? (miembros.filter(m => m.estado === "activo").length / miembros.length) * 100 : 0}%` }}
                     ></div>
                   </div>
@@ -393,7 +400,7 @@ export default function MiembrosPage() {
                   </div>
                   <div className="w-full bg-neutral-200 rounded-full h-2">
                     <div 
-                      className="bg-neutral-400 h-2 rounded-full" 
+                      className="bg-slate-500 h-2 rounded-full" 
                       style={{ width: `${miembros ? (miembros.filter(m => m.estado === "inactivo").length / miembros.length) * 100 : 0}%` }}
                     ></div>
                   </div>
@@ -406,7 +413,7 @@ export default function MiembrosPage() {
                   </div>
                   <div className="w-full bg-neutral-200 rounded-full h-2">
                     <div 
-                      className="bg-primary h-2 rounded-full" 
+                      className="bg-slate-500 h-2 rounded-full"  
                       style={{ width: `${miembros ? (miembros.filter(m => m.estado === "nuevo").length / miembros.length) * 100 : 0}%` }}
                     ></div>
                   </div>
@@ -419,7 +426,7 @@ export default function MiembrosPage() {
                   </div>
                   <div className="w-full bg-neutral-200 rounded-full h-2">
                     <div 
-                      className="bg-secondary h-2 rounded-full" 
+                      className="bg-slate-500 h-2 rounded-full"  
                       style={{ width: `${miembros ? (miembros.filter(m => m.bautizado).length / miembros.length) * 100 : 0}%` }}
                     ></div>
                   </div>
@@ -453,7 +460,7 @@ export default function MiembrosPage() {
                           </div>
                           <div className="w-full bg-neutral-200 rounded-full h-2">
                             <div 
-                              className="bg-primary h-2 rounded-full" 
+                              className="bg-slate-500 h-2 rounded-full"
                               style={{ width: `${(count / miembros.length) * 100}%` }}
                             ></div>
                           </div>

@@ -28,8 +28,8 @@
   /* Colores principales adventistas */
   --primary: 30 41 59; /* slate-800 */
   --primary-foreground: 248 250 252;
-  --secondary: 245 158 11; /* amber-500 */
-  --secondary-foreground: 30 41 59;
+   --secondary: 100 116 139; /* slate-500 */
+  --secondary-foreground: 255 255 255;
   --accent: 251 191 36; /* amber-400 */
   --accent-foreground: 30 41 59;
   
@@ -100,8 +100,8 @@
 }
 
 .adventist-button-secondary {
-  @apply bg-amber-500 text-slate-800 hover:bg-amber-400 font-medium px-4 py-2 rounded-lg;
-  box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.25);
+  @apply bg-slate-600 text-white hover:bg-slate-700 font-medium px-4 py-2 rounded-lg;
+  box-shadow: 0 4px 14px 0 rgba(100, 116, 139, 0.25);
   transition: all 0.3s ease;
 }
 
@@ -124,9 +124,10 @@
 }
 
 .adventist-nav-active {
-  @apply bg-gradient-to-r from-amber-500/20 to-yellow-400/20 text-amber-400 border border-amber-400/30;
-  box-shadow: 0 4px 12px 0 rgba(245, 158, 11, 0.15);
+  @apply bg-slate-200 text-slate-800 border border-slate-300;
+  box-shadow: 0 4px 12px 0 rgba(100, 116, 139, 0.1);
 }
+
 
 .adventist-header {
   background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
@@ -275,5 +276,5 @@
 /* Quitar gradientes amarillos */
 .adventist-gold-gradient,
 ::-webkit-scrollbar-thumb {
-  background: #e2e8f0; /* Gris claro */
+  background: #e2e8f0 !important; /* Gris claro */
 }

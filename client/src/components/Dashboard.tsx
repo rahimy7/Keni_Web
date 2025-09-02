@@ -158,9 +158,7 @@ export default function IglesiaDashboard() {
       <div className="adventist-header rounded-2xl p-6 text-white shadow-xl">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div className="flex items-center space-x-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-500 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-2xl">✝</span>
-            </div>
+           
             <div>
               <h1 className="text-2xl font-bold">¡Bienvenido, Pr. Keni!</h1>
               <p className="text-slate-300">Panel Administrativo - {formatDate()}</p>
@@ -246,7 +244,7 @@ export default function IglesiaDashboard() {
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Participación por Ministerio */}
-        <div className="adventist-card">
+        <div className="adventist-card p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-bold text-slate-800">Participación por Ministerio</h3>
             <div className="p-2 bg-gradient-to-br from-amber-400 to-amber-500 rounded-lg">
@@ -277,7 +275,7 @@ export default function IglesiaDashboard() {
         </div>
 
         {/* Actividad Reciente */}
-        <div className="adventist-card">
+        <div className="adventist-card p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-bold text-slate-800">Actividad Reciente</h3>
             <div className="p-2 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg">
@@ -301,7 +299,7 @@ export default function IglesiaDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="adventist-card">
+      <div className="adventist-card p-6">
         <div className="flex items-center space-x-3 mb-6">
           <div className="p-2 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg">
             <Zap className="w-5 h-5 text-white" />
@@ -343,7 +341,7 @@ export default function IglesiaDashboard() {
       {/* Métricas Detalladas */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Fidelidad y Compromiso */}
-        <div className="adventist-card">
+        <div className="adventist-card p-6">
           <div className="flex items-center space-x-3 mb-6">
             <div className="p-2 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg">
               <Award className="w-5 h-5 text-white" />
@@ -382,7 +380,7 @@ export default function IglesiaDashboard() {
         </div>
 
         {/* Próximos Eventos */}
-        <div className="adventist-card">
+        <div className="adventist-card p-6">
           <div className="flex items-center space-x-3 mb-6">
             <div className="p-2 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg">
               <Calendar className="w-5 h-5 text-white" />
@@ -409,7 +407,7 @@ export default function IglesiaDashboard() {
         </div>
 
         {/* Resumen Semanal */}
-        <div className="adventist-card">
+        <div className="adventist-card p-6">
           <div className="flex items-center space-x-3 mb-6">
             <div className="p-2 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg">
               <TrendingUp className="w-5 h-5 text-white" />
